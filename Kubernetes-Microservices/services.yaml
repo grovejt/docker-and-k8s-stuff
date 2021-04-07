@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetman-queue
+spec:
+  # This defines which pods are going to be represented by this service.
+  # The service becomes a network endpoint for either other services or maybe external users to connect to (e.g. web browser)
+  selector:
+    app: queue
+  ports:
+    - name: http
+      port: 8161
+      targetPort: 8161
+      nodePort: 30010 # must be greater then 30,000
+  type: NodePort
+  # type: NodePort - expose the port through a node
+  # type: ClusterIP - only available inside the cluster
+  # type: LoadBalancer - only available for some cloud providers
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetman-webapp
+spec:
+  # This defines which pods are going to be represented by this service.
+  # The service becomes a network endpoint for either other services or maybe external users to connect to (e.g. web browser)
+  selector:
+    app: webapp
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30080 # must be greater then 30,000
+  type: NodePort
+  # type: NodePort - expose the port through a node
+  # type: ClusterIP - only available inside the cluster
+  # type: LoadBalancer - only available for some cloud providers
+  
